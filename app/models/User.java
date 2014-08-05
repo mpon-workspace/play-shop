@@ -23,4 +23,20 @@ public class User extends Model {
     Long.class, User.class
   ); 
 
+  public String validate() {
+    if (authenticate(name, password)) {
+      return null;
+    }
+    return "Invalid user and password";
+  }
+
+  private Boolean authenticate(String name, String password) {
+    User user = find.where()
+    .eq("name", name)
+    .eq("password", password)
+    .findUnique();
+
+    return user != null;
+  }
+
 }

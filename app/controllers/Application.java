@@ -19,7 +19,19 @@ public class Application extends Controller {
     }
 
     public static Result authenticate() {
+    	Form<User> loginForm = Form.form(User.class).bindFromRequest();
+    	if (loginForm.hasErrors()) {
+    		return badRequest(login.render(loginForm));
+    	}
     	return redirect(routes.Application.index());
+    }
+
+    public static Result addUser() {
+    	User user = new User();
+    	user.name = "Tom";
+    	user.password = "password123";
+    	user.save();
+    	return redirect(routes.Application.login());
     }
 
 }

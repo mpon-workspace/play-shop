@@ -11,6 +11,11 @@
 <body>
   @form(routes.Application.authenticate) {
     <h1>Sign in</h1>
+    @if(loginForm.hasGlobalErrors) {
+    <p class="error">
+        @loginForm.globalError.message
+    </p>
+    }
     @inputText(loginForm("name"))
     @inputPassword(loginForm("password"))
     <p>
