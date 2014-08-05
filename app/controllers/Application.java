@@ -35,9 +35,9 @@ public class Application extends Controller {
     }
 
     public static Result addUser() {
-    	User masato = User.find.where().eq("name", "masato").findUnique();
-    	if (masato == null) {
-    		User.create("masato", "password123");
+    	User user = User.find.where().eq("name", "admin").findUnique();
+    	if (user == null) {
+    		User.create("admin", "password123");
     	}
     	return redirect(routes.Application.login());
     }
