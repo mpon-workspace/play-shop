@@ -7,6 +7,8 @@ import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 @Entity 
 public class User extends Model {
 
@@ -31,12 +33,15 @@ public class User extends Model {
   }
 
   private Boolean authenticate(String name, String password) {
-    User user = find.where()
-    .eq("name", name)
-    .eq("password", password)
-    .findUnique();
+    User user = find.where().eq("name", name).findUnique();
+    return (user != null && BCrypt.checkpw(password, user.password));
+  }
 
-    return user != null;
+  public static void create(String name, String password) {
+    User user = new User();
+    user.name = name;
+    user.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    user.save();
   }
 
 }

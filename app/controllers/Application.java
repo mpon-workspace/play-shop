@@ -35,10 +35,10 @@ public class Application extends Controller {
     }
 
     public static Result addUser() {
-    	User user = new User();
-    	user.name = "Tom";
-    	user.password = "password123";
-    	user.save();
+    	User masato = User.find.where().eq("name", "masato").findUnique();
+    	if (masato == null) {
+    		User.create("masato", "password123");
+    	}
     	return redirect(routes.Application.login());
     }
 
